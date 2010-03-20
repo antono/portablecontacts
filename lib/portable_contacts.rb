@@ -180,6 +180,7 @@ module PortableContacts
     
     # primary email address
     def email
+      return '' if emails.blank?
       @email||= begin
         (emails.detect {|e| e['primary']=='true '} || emails.first)["value"] unless emails.empty?
       end
