@@ -42,7 +42,18 @@ module PortableContacts
     def all(options={})
       collection(get("/@me/@all",options.reverse_merge(:fields=>:all,:count=>100)))
     end
-    
+
+    # Return all contacts of specified group. It defaults to all fields and 100 entries
+    #
+    #   @contacts = @client.gorup('friends')                # return 100 contacts from 'friends' group
+    #   @contacts = @client.gorup('friends'  :count=>10)    # return 10 contacts
+    #   @contacts = @client.group('friends', :count=>10, :start_index => 10)
+    #                                                       # returns the second page of 10 contacts
+    #
+    def group(group_name, options = {})
+      collection(get("/@me/#{group_name}", options.reverse_merge(:fields=>:all, :count=>100)))
+    end
+
     # Returns the full contact infor for a particular userid. TODO This is not tested well
     # Returns an PortableContacts::Person object
     def find(id, options={})
